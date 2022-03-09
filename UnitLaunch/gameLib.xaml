@@ -1,0 +1,64 @@
+﻿<Page x:Class="UnitLaunch.gameLib"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UnitLaunch"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="gameLib" Loaded="Page_Loaded"
+      xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+      xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+    <Page.Resources>
+        <Style x:Key="gameCard" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkButton}">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="300" />
+            <Setter Property="Margin" Value="8,20,8,20" />
+            <Setter Property="Padding" Value="2,2,4,2" />
+            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="4" />
+            <Style.Resources>
+                <Style TargetType="StackPanel">
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush Stretch="Fill" ImageSource="./Resources/images/Prey_(2017_video_game).jpg"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Width" Value="182" />
+                            <Setter Property="Height" Value="230"/>
+                            <Setter Property="CornerRadius" Value="4" />
+                        </Style>
+                    </Style.Resources>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                    <Setter Property="Margin" Value="0,0,0,-5"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="gameFile">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="#6e6e6e" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!--<TreeView x:Name="treeV"/>-->
+
+        <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
+            <TextBlock x:Name="gameCardsWrap" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <Button Style="{StaticResource gameCard}" Cursor="Hand" Click="Button_Click">
+                    <StackPanel>
+                        <Border/>
+                        <TextBlock Text="PREY"/>
+                        <TextBlock Text="Prey.exe" Style="{StaticResource gameFile}"/>
+                    </StackPanel>
+                </Button>
+            </TextBlock>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\fonts\7X7PixelizedRegular.ttf" />
+    <None Remove="Resources\images\EGS_Prey_ArkaneStudios_S1_2560x1440-66103490180b56a8a132ae2487e18f2f.jfif" />
+    <None Remove="Resources\images\Prey_%282017_video_game%29.jpg" />
+    <None Remove="Resources\images\UnitLogoGreenWide %282%29.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\images\EGS_Prey_ArkaneStudios_S1_2560x1440-66103490180b56a8a132ae2487e18f2f.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="2.0.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\fonts\7X7PixelizedRegular.ttf" />
+    <Resource Include="Resources\images\Prey_(2017_video_game).jpg" />
+    <Resource Include="Resources\images\UnitLogoGreenWide (2).png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Новая папка\" />
+  </ItemGroup>
+
+</Project>
