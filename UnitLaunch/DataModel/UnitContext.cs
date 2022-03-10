@@ -16,11 +16,5 @@ namespace UnitLaunch.DataModel
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=UnitLaunchDB;Trusted_Connection=True;");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Game>()
-                .HasIndex(b => b.FilePath)
-                .IsUnique();
-        }
     }
 }

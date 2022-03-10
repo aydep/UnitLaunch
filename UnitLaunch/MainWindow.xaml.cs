@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,47 @@ namespace UnitLaunch
         {
             InitializeComponent();
             mainFrame.Content = new gameLib();
+
+            lastGamesLoad();
+        }
+
+        private void lastGamesLoad()
+        {
+            using (DataModel.UnitContext db = new DataModel.UnitContext())
+            {
+                var games = db.Games.Where(p => p.LastRun != null).OrderByDescending(d => d.LastRun).ToArray();
+                int i = 0;
+
+                foreach (var game in games)
+                {
+                    Button card = new Button();
+                    Image image = new Image();
+                    Border border = new Border();
+                    Grid grid = new Grid();
+                    TextBlock name = new TextBlock();
+
+                    card.Style = Resources["lastGamesItem"] as Style;
+                    card.Content = grid;
+                    grid.Children.Add(image);
+                    grid.Children.Add(border);
+                    grid.Children.Add(name);
+
+                    BitmapImage bitImg = new BitmapImage();
+                    bitImg.BeginInit();
+                    bitImg.UriSource = new Uri("./Resources/images/Prey_(2017_video_game).jpg", UriKind.Relative);
+                    bitImg.EndInit();
+                    image.Source = bitImg;
+
+                    name.Text = game.Name;
+
+                    card.Name = "lastGameCard"+i;
+
+                    mainMenu.Children.Add(card);
+
+                    i++;
+                    if (i == 3) break;
+                }
+            }
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -55,18 +97,14 @@ namespace UnitLaunch
 
         }
 
-        async private void storeBut_Selected(object sender, RoutedEventArgs e)
+        private void storeBut_Selected(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() =>
-            {
-                using (DataModel.UnitContext db = new DataModel.UnitContext())
-                {
-                    db.Games.RemoveRange(db.Games);
-                    db.SaveChanges();
-                    MessageBox.Show(db.Games.ToList().Count().ToString());
-                }
 
-            });
+        }
+
+        private void libBut_Selected(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

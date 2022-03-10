@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -26,7 +27,7 @@ namespace UnitLaunch
             InitializeComponent();
         }
 
-        async public void gamesDbUpdate()
+        async public void gamesScan()
         {
             using (DataModel.UnitContext db = new DataModel.UnitContext())
             {
@@ -57,42 +58,23 @@ namespace UnitLaunch
                                 db.Games.Add(game);
                                 db.SaveChanges();
                             }
-                            catch (Exception)
-                            {
-
-                            }
-                            
+                            catch (Exception) {}
                         }
-                    }
-
-                    //var games = db.Games.ToList();
-                    foreach (var game in db.Games)
-                    {
-                        MessageBox.Show($"{game.Id}.{game.Name} {game.FilePath} {game.ImagePath}");
                     }
                 });
             }
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            gamesDbUpdate();
-        }
-
-        private void addGameCard()
+        private void addGameCards()
         {
             using (DataModel.UnitContext db = new DataModel.UnitContext())
             {
-                var games = db.Games.ToList();
-
                 foreach (var game in db.Games)
                 {
                     Button card = new Button();
                     StackPanel panel = new StackPanel();
                     Border border = new Border();
                     TextBlock gameName = new TextBlock();
-                    TextBlock gameFolder = new TextBlock();
-
+                    TextBlock gameFile = new TextBlock();
 
                     card.Width = 200;
                     card.Height = 300;
@@ -100,25 +82,32 @@ namespace UnitLaunch
                     card.Content = panel;
                     panel.Children.Add(border);
                     panel.Children.Add(gameName);
-                    gameName.Text = game.Name;
-                    panel.Children.Add(gameFolder);
-                    gameFolder.Text = game.FilePath.Split("\\").Last();
-                    gameFolder.Style = Resources["gameFolder"] as Style;
+                    gameName.Text = Regex.Replace(game.Name, @"([A-Z])", " $1").Trim();
+                    panel.Children.Add(gameFile);
+                    gameFile.Text = game.FilePath.Split("\\").Last();
+                    gameFile.Style = Resources["gameFile"] as Style;
 
-                    card.AddHandler(Button.ClickEvent, new RoutedEventHandler(gameCardClick));
+                    card.Click += (s,e) =>
+                    {
+                        using (DataModel.UnitContext bdb = new DataModel.UnitContext())
+                        {
+                            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
+                            var curGame = bdb.Games.Find(game.Id);
+                            Proc.StartInfo.FileName = game.FilePath;
+                            Proc.Start();
+                            curGame.LastRun = DateTime.Now;
+                            bdb.SaveChanges();
+                        }
+                    };
 
                     gameCardsWrap.Inlines.Add(card);
                 }
             }
         }
-
-        private void gameCardClick(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            addGameCard();
+            gamesScan();
+            addGameCards();
         }
     }
 }

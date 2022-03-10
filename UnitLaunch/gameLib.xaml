@@ -35,7 +35,7 @@
                 <Style TargetType="TextBlock">
                     <Setter Property="FontSize" Value="20"/>
                     <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
-                    <Setter Property="Margin" Value="0,0,0,-5"/>
+                    <Setter Property="TextWrapping" Value="Wrap" />
                 </Style>
             </Style.Resources>
         </Style>
@@ -47,18 +47,8 @@
     </Page.Resources>
 
     <Grid>
-        <!--<TreeView x:Name="treeV"/>-->
-
         <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
-            <TextBlock x:Name="gameCardsWrap" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                <Button Style="{StaticResource gameCard}" Cursor="Hand" Click="Button_Click">
-                    <StackPanel>
-                        <Border/>
-                        <TextBlock Text="PREY"/>
-                        <TextBlock Text="Prey.exe" Style="{StaticResource gameFile}"/>
-                    </StackPanel>
-                </Button>
-            </TextBlock>
+            <TextBlock x:Name="gameCardsWrap" TextWrapping="Wrap" />
         </ScrollViewer>
     </Grid>
 </Page>
