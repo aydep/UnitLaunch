@@ -1,0 +1,56 @@
+﻿<Page x:Class="UnitLaunch.store"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UnitLaunch"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="store" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style x:Key="ass" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedLightButton}"/>
+        <Style x:Key="butt" TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignNavigationPrimaryListBoxItem}"/>
+    </Page.Resources>
+    <Grid>
+        <materialDesign:DrawerHost x:Name="DrawerHost" LeftDrawerBackground="#26292b">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <ListView x:Name="MainGrid"/>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button
+                        Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                        CommandParameter="{x:Static Dock.Left}"
+                        Margin="4"
+                        Content="{materialDesign:PackIcon Kind=MenuOpen,Size=30}"
+                        Padding="10,0"
+                        Cursor="Hand" />
+                    <Button 
+                        Content="{materialDesign:PackIcon Kind=ArrowLeft, Size=24}" 
+                        Cursor="Hand"
+                        Margin="4"/>
+                    <TextBox
+                        Text="1"
+                        Foreground="White"
+                        FontSize="22"
+                        Padding="10,0"
+                        Height="34"
+                        Style="{DynamicResource MaterialDesignOutlinedTextBox}" 
+                        Cursor="IBeam"
+                        Margin="4"/>
+                    <Button 
+                        Content="{materialDesign:PackIcon Kind=ArrowRight, Size=24}"
+                        Cursor="Hand"
+                        Margin="4"/>
+                </StackPanel>
+                
+            </Grid>
+            
+        </materialDesign:DrawerHost>
+    </Grid>
+</Page>

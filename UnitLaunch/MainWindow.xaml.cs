@@ -23,7 +23,7 @@ namespace UnitLaunch
         public MainWindow()
         {
             InitializeComponent();
-            mainFrame.Content = new gameLib();
+            mainFrame.Content = new store();
 
             lastGamesLoad();
         }
@@ -58,6 +58,19 @@ namespace UnitLaunch
                     name.Text = game.Name;
 
                     card.Name = "lastGameCard"+i;
+
+                    card.Click += (s, e) =>
+                    {
+                        using (DataModel.UnitContext bdb = new DataModel.UnitContext())
+                        {
+                            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
+                            var curGame = bdb.Games.Find(game.Id);
+                            Proc.StartInfo.FileName = game.FilePath;
+                            Proc.Start();
+                            curGame.LastRun = DateTime.Now;
+                            bdb.SaveChanges();
+                        }
+                    };
 
                     mainMenu.Children.Add(card);
 
@@ -99,12 +112,13 @@ namespace UnitLaunch
 
         private void storeBut_Selected(object sender, RoutedEventArgs e)
         {
-
+            mainFrame.Navigate(new store());
         }
 
         private void libBut_Selected(object sender, RoutedEventArgs e)
         {
-
+            mainFrame.Navigate(new gameLib());
+            mainFrame.Navigate(new gameLib());
         }
     }
 }
